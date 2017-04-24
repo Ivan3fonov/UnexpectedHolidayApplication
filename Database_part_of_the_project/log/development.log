@@ -1,0 +1,1163 @@
+  [1m[36m (58.8ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (51.2ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreatePlaces (20170319125740)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (88.3ms)[0m  [1mCREATE TABLE "places" ("id" serial primary key, "name" character varying, "continent" character varying, "longitude" float, "latitude" float, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20170319125740"]]
+  [1m[36m (8.6ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (3.6ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'places'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+
+
+Started POST "/places" for 127.0.0.1 at 2017-03-19 15:53:18 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by PlacesController#create as */*
+  Parameters: {"name"=>"New York", "continent"=>"North America", "longitude"=>"554.11113455", "latitude"=>"122.11122556"}
+Completed 500 Internal Server Error in 30ms (ActiveRecord: 0.0ms)
+
+NameError (uninitialized constant PlacesController::Places):
+  app/controllers/places_controller.rb:5:in `create'
+
+
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_source.erb (6.8ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.2ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (43.1ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.8ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (83.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (1.0ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (137.5ms)
+
+
+Started POST "/places" for 127.0.0.1 at 2017-03-19 15:55:03 +0200
+Processing by PlacesController#create as */*
+  Parameters: {"name"=>"New York", "continent"=>"North America", "longitude"=>"554.11113455", "latitude"=>"122.11122556"}
+  [1m[35mPlace Exists (0.9ms)[0m  SELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1  [["id", 0]]
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (9.6ms)[0m  INSERT INTO "places" ("name", "continent", "longitude", "latitude", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "New York"], ["continent", "North America"], ["longitude", 554.11113455], ["latitude", 122.11122556], ["created_at", "2017-03-19 13:55:03.983448"], ["updated_at", "2017-03-19 13:55:03.983448"]]
+  [1m[36m (48.1ms)[0m  [1mCOMMIT[0m
+Completed 500 Internal Server Error in 241ms (ActiveRecord: 64.5ms)
+
+ActionView::MissingTemplate (Missing template places/create, application/create with {:locale=>[:en], :formats=>[:html, :text, :js, :css, :ics, :csv, :vcf, :png, :jpeg, :gif, :bmp, :tiff, :mpeg, :xml, :rss, :atom, :yaml, :multipart_form, :url_encoded_form, :json, :pdf, :zip, :web_console_v2], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/home/stealth/Desktop/Project_1/travel_project/app/views"
+):
+  /usr/lib/ruby/vendor_ruby/action_view/path_set.rb:46:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/lookup_context.rb:121:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/abstract_renderer.rb:18:in `find_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:40:in `determine_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:8:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:46:in `render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:27:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:100:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/streaming.rb:217:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:83:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:32:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/renderers.rb:37:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/rendering.rb:25:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:16:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block (2 levels) in render'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `block in ms'
+  /usr/lib/ruby/2.3.0/benchmark.rb:308:in `realtime'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `ms'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block in render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:87:in `cleanup_view_runtime'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:25:in `cleanup_view_runtime'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:43:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:10:in `default_render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:5:in `send_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:198:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:10:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:20:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:117:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:505:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:92:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:19:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rescue.rb:29:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `block in instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications/instrumenter.rb:20:in `instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `instrument'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:30:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:137:in `process'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:30:in `process'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:196:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:237:in `block in action'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:74:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:43:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:43:in `block in serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `each'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:817:in `call'
+  rack (1.6.5) lib/rack/etag.rb:24:in `call'
+  rack (1.6.5) lib/rack/conditionalget.rb:38:in `call'
+  rack (1.6.5) lib/rack/head.rb:13:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/params_parser.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:220:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+  activerecord (4.2.6) lib/active_record/migration.rb:377:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:88:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/reloader.rb:73:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:38:in `call_app'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `block in tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:26:in `tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `tagged'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/engine.rb:518:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_source.erb (8.5ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.9ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/missing_template.html.erb within rescues/layout (28.8ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.9ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (25.2ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (1.2ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (48.9ms)
+
+
+Started POST "/places" for 127.0.0.1 at 2017-03-19 15:56:08 +0200
+Processing by PlacesController#create as */*
+  Parameters: {"name"=>"New York", "continent"=>"North America", "longitude"=>"554.11113455", "latitude"=>"122.11122556"}
+  [1m[35mPlace Exists (0.5ms)[0m  SELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1  [["id", 0]]
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "places" ("name", "continent", "longitude", "latitude", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "New York"], ["continent", "North America"], ["longitude", 554.11113455], ["latitude", 122.11122556], ["created_at", "2017-03-19 13:56:08.299539"], ["updated_at", "2017-03-19 13:56:08.299539"]]
+  [1m[36m (18.2ms)[0m  [1mCOMMIT[0m
+Completed 500 Internal Server Error in 77ms (ActiveRecord: 24.0ms)
+
+ActionView::MissingTemplate (Missing template places/create, application/create with {:locale=>[:en], :formats=>[:html, :text, :js, :css, :ics, :csv, :vcf, :png, :jpeg, :gif, :bmp, :tiff, :mpeg, :xml, :rss, :atom, :yaml, :multipart_form, :url_encoded_form, :json, :pdf, :zip, :web_console_v2], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/home/stealth/Desktop/Project_1/travel_project/app/views"
+):
+  /usr/lib/ruby/vendor_ruby/action_view/path_set.rb:46:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/lookup_context.rb:121:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/abstract_renderer.rb:18:in `find_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:40:in `determine_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:8:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:46:in `render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:27:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:100:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/streaming.rb:217:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:83:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:32:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/renderers.rb:37:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/rendering.rb:25:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:16:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block (2 levels) in render'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `block in ms'
+  /usr/lib/ruby/2.3.0/benchmark.rb:308:in `realtime'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `ms'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block in render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:87:in `cleanup_view_runtime'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:25:in `cleanup_view_runtime'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:43:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:10:in `default_render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:5:in `send_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:198:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:10:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:20:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:117:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:505:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:92:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:19:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rescue.rb:29:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `block in instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications/instrumenter.rb:20:in `instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `instrument'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:30:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:137:in `process'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:30:in `process'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:196:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:237:in `block in action'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:74:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:43:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:43:in `block in serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `each'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:817:in `call'
+  rack (1.6.5) lib/rack/etag.rb:24:in `call'
+  rack (1.6.5) lib/rack/conditionalget.rb:38:in `call'
+  rack (1.6.5) lib/rack/head.rb:13:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/params_parser.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:220:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+  activerecord (4.2.6) lib/active_record/migration.rb:377:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:88:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/reloader.rb:73:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:38:in `call_app'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `block in tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:26:in `tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `tagged'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/engine.rb:518:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_source.erb (8.4ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.6ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.5ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/missing_template.html.erb within rescues/layout (33.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.8ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (33.1ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.8ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (66.8ms)
+
+
+Started POST "/places" for 127.0.0.1 at 2017-03-19 15:57:23 +0200
+Processing by PlacesController#create as */*
+  Parameters: {"name"=>"New York", "continent"=>"North America", "longitude"=>"554.11113455", "latitude"=>"122.11122556"}
+  [1m[35mPlace Exists (0.7ms)[0m  SELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1  [["id", 0]]
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "places" ("name", "continent", "longitude", "latitude", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "New York"], ["continent", "North America"], ["longitude", 554.11113455], ["latitude", 122.11122556], ["created_at", "2017-03-19 13:57:23.300302"], ["updated_at", "2017-03-19 13:57:23.300302"]]
+  [1m[36m (44.7ms)[0m  [1mCOMMIT[0m
+Completed 500 Internal Server Error in 85ms (ActiveRecord: 49.6ms)
+
+ActionView::MissingTemplate (Missing template places/create, application/create with {:locale=>[:en], :formats=>[:html, :text, :js, :css, :ics, :csv, :vcf, :png, :jpeg, :gif, :bmp, :tiff, :mpeg, :xml, :rss, :atom, :yaml, :multipart_form, :url_encoded_form, :json, :pdf, :zip, :web_console_v2], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/home/stealth/Desktop/Project_1/travel_project/app/views"
+):
+  /usr/lib/ruby/vendor_ruby/action_view/path_set.rb:46:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/lookup_context.rb:121:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/abstract_renderer.rb:18:in `find_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:40:in `determine_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:8:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:46:in `render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:27:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:100:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/streaming.rb:217:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:83:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:32:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/renderers.rb:37:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/rendering.rb:25:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:16:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block (2 levels) in render'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `block in ms'
+  /usr/lib/ruby/2.3.0/benchmark.rb:308:in `realtime'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `ms'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block in render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:87:in `cleanup_view_runtime'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:25:in `cleanup_view_runtime'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:43:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:10:in `default_render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:5:in `send_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:198:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:10:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:20:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:117:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:505:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:92:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:19:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rescue.rb:29:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `block in instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications/instrumenter.rb:20:in `instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `instrument'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:30:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:137:in `process'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:30:in `process'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:196:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:237:in `block in action'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:74:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:43:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:43:in `block in serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `each'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:817:in `call'
+  rack (1.6.5) lib/rack/etag.rb:24:in `call'
+  rack (1.6.5) lib/rack/conditionalget.rb:38:in `call'
+  rack (1.6.5) lib/rack/head.rb:13:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/params_parser.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:220:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+  activerecord (4.2.6) lib/active_record/migration.rb:377:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:88:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/reloader.rb:73:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:38:in `call_app'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `block in tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:26:in `tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `tagged'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/engine.rb:518:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_source.erb (15.9ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_trace.html.erb (6.7ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.4ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/missing_template.html.erb within rescues/layout (48.3ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (1.0ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.9ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (1.2ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (35.2ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (63.3ms)
+
+
+Started POST "/places" for 127.0.0.1 at 2017-03-19 15:59:07 +0200
+Processing by PlacesController#create as */*
+  Parameters: {"name"=>"New York", "continent"=>"North America", "longitude"=>"554.11113455", "latitude"=>"122.11122556"}
+  [1m[35mPlace Exists (0.5ms)[0m  SELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1  [["id", 0]]
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "places" ("name", "continent", "longitude", "latitude", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "New York"], ["continent", "North America"], ["longitude", 554.11113455], ["latitude", 122.11122556], ["created_at", "2017-03-19 13:59:07.178081"], ["updated_at", "2017-03-19 13:59:07.178081"]]
+  [1m[36m (14.4ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 42ms (Views: 1.0ms | ActiveRecord: 18.0ms)
+
+
+Started POST "/places" for 127.0.0.1 at 2017-03-19 16:00:46 +0200
+Processing by PlacesController#create as */*
+  Parameters: {"name"=>"Hisaria", "continent"=>"Europe", "longitude"=>"42.1334", "latitude"=>"41.222"}
+  [1m[35mPlace Exists (0.5ms)[0m  SELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1  [["id", 0]]
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "places" ("name", "continent", "longitude", "latitude", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "Hisaria"], ["continent", "Europe"], ["longitude", 42.1334], ["latitude", 41.222], ["created_at", "2017-03-19 14:00:46.867673"], ["updated_at", "2017-03-19 14:00:46.867673"]]
+  [1m[36m (12.2ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 20ms (Views: 0.5ms | ActiveRecord: 13.4ms)
+
+
+Started GET "/places?continent=Europe" for 127.0.0.1 at 2017-03-19 16:02:24 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"continent"=>"Europe"}
+Completed 500 Internal Server Error in 14ms (ActiveRecord: 0.0ms)
+
+ActionView::MissingTemplate (Missing template places/show, application/show with {:locale=>[:en], :formats=>[:html, :text, :js, :css, :ics, :csv, :vcf, :png, :jpeg, :gif, :bmp, :tiff, :mpeg, :xml, :rss, :atom, :yaml, :multipart_form, :url_encoded_form, :json, :pdf, :zip, :web_console_v2], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/home/stealth/Desktop/Project_1/travel_project/app/views"
+):
+  /usr/lib/ruby/vendor_ruby/action_view/path_set.rb:46:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/lookup_context.rb:121:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/abstract_renderer.rb:18:in `find_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:40:in `determine_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:8:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:46:in `render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:27:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:100:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/streaming.rb:217:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:83:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:32:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/renderers.rb:37:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/rendering.rb:25:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:16:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block (2 levels) in render'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `block in ms'
+  /usr/lib/ruby/2.3.0/benchmark.rb:308:in `realtime'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `ms'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block in render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:87:in `cleanup_view_runtime'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:25:in `cleanup_view_runtime'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:43:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:10:in `default_render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:5:in `send_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:198:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:10:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:20:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:117:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:505:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:92:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:19:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rescue.rb:29:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `block in instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications/instrumenter.rb:20:in `instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `instrument'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:30:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:137:in `process'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:30:in `process'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:196:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:237:in `block in action'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:74:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:43:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:43:in `block in serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `each'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:817:in `call'
+  rack (1.6.5) lib/rack/etag.rb:24:in `call'
+  rack (1.6.5) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.6.5) lib/rack/head.rb:13:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/params_parser.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:220:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+  activerecord (4.2.6) lib/active_record/migration.rb:377:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:88:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/reloader.rb:73:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:38:in `call_app'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `block in tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:26:in `tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `tagged'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/engine.rb:518:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_source.erb (8.2ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_trace.html.erb (4.0ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/missing_template.html.erb within rescues/layout (28.2ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (19.8ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (38.9ms)
+
+
+Started GET "/places?continent=Europe/" for 127.0.0.1 at 2017-03-19 16:02:39 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"continent"=>"Europe/"}
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms)
+
+ActionView::MissingTemplate (Missing template places/show, application/show with {:locale=>[:en], :formats=>[:html, :text, :js, :css, :ics, :csv, :vcf, :png, :jpeg, :gif, :bmp, :tiff, :mpeg, :xml, :rss, :atom, :yaml, :multipart_form, :url_encoded_form, :json, :pdf, :zip, :web_console_v2], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/home/stealth/Desktop/Project_1/travel_project/app/views"
+):
+  /usr/lib/ruby/vendor_ruby/action_view/path_set.rb:46:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/lookup_context.rb:121:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/abstract_renderer.rb:18:in `find_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:40:in `determine_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:8:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:46:in `render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:27:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:100:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/streaming.rb:217:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:83:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:32:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/renderers.rb:37:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/rendering.rb:25:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:16:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block (2 levels) in render'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `block in ms'
+  /usr/lib/ruby/2.3.0/benchmark.rb:308:in `realtime'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `ms'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block in render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:87:in `cleanup_view_runtime'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:25:in `cleanup_view_runtime'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:43:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:10:in `default_render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:5:in `send_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:198:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:10:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:20:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:117:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:505:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:92:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:19:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rescue.rb:29:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `block in instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications/instrumenter.rb:20:in `instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `instrument'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:30:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:137:in `process'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:30:in `process'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:196:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:237:in `block in action'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:74:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:43:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:43:in `block in serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `each'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:817:in `call'
+  rack (1.6.5) lib/rack/etag.rb:24:in `call'
+  rack (1.6.5) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.6.5) lib/rack/head.rb:13:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/params_parser.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:220:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+  activerecord (4.2.6) lib/active_record/migration.rb:377:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:88:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/reloader.rb:73:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:38:in `call_app'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `block in tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:26:in `tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `tagged'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/engine.rb:518:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_source.erb (7.8ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.4ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/missing_template.html.erb within rescues/layout (26.3ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (19.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (40.3ms)
+
+
+Started GET "/places?name=New%20York" for 127.0.0.1 at 2017-03-19 16:03:27 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"New York"}
+  [1m[35mPlace Exists (0.5ms)[0m  SELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1  [["id", 0]]
+Completed 500 Internal Server Error in 29ms (ActiveRecord: 3.6ms)
+
+ActionView::MissingTemplate (Missing template places/show, application/show with {:locale=>[:en], :formats=>[:html, :text, :js, :css, :ics, :csv, :vcf, :png, :jpeg, :gif, :bmp, :tiff, :mpeg, :xml, :rss, :atom, :yaml, :multipart_form, :url_encoded_form, :json, :pdf, :zip, :web_console_v2], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/home/stealth/Desktop/Project_1/travel_project/app/views"
+):
+  /usr/lib/ruby/vendor_ruby/action_view/path_set.rb:46:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/lookup_context.rb:121:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/abstract_renderer.rb:18:in `find_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:40:in `determine_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:8:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:46:in `render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:27:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:100:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/streaming.rb:217:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:83:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:32:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/renderers.rb:37:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/rendering.rb:25:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:16:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block (2 levels) in render'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `block in ms'
+  /usr/lib/ruby/2.3.0/benchmark.rb:308:in `realtime'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `ms'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block in render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:87:in `cleanup_view_runtime'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:25:in `cleanup_view_runtime'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:43:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:10:in `default_render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:5:in `send_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:198:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:10:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:20:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:117:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:505:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:92:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:19:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rescue.rb:29:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `block in instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications/instrumenter.rb:20:in `instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `instrument'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:30:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:137:in `process'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:30:in `process'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:196:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:237:in `block in action'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:74:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:43:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:43:in `block in serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `each'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:817:in `call'
+  rack (1.6.5) lib/rack/etag.rb:24:in `call'
+  rack (1.6.5) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.6.5) lib/rack/head.rb:13:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/params_parser.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:220:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+  activerecord (4.2.6) lib/active_record/migration.rb:377:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:88:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/reloader.rb:73:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:38:in `call_app'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `block in tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:26:in `tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `tagged'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/engine.rb:518:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_source.erb (7.6ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.6ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.3ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/missing_template.html.erb within rescues/layout (26.2ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.8ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (23.8ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (43.0ms)
+
+
+Started GET "/places?name=Hisaria" for 127.0.0.1 at 2017-03-19 16:03:34 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"Hisaria"}
+  [1m[36mPlace Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1[0m  [["id", 0]]
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 0.4ms)
+
+ActionView::MissingTemplate (Missing template places/show, application/show with {:locale=>[:en], :formats=>[:html, :text, :js, :css, :ics, :csv, :vcf, :png, :jpeg, :gif, :bmp, :tiff, :mpeg, :xml, :rss, :atom, :yaml, :multipart_form, :url_encoded_form, :json, :pdf, :zip, :web_console_v2], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/home/stealth/Desktop/Project_1/travel_project/app/views"
+):
+  /usr/lib/ruby/vendor_ruby/action_view/path_set.rb:46:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/lookup_context.rb:121:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/abstract_renderer.rb:18:in `find_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:40:in `determine_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:8:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:46:in `render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:27:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:100:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/streaming.rb:217:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:83:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:32:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/renderers.rb:37:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/rendering.rb:25:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:16:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block (2 levels) in render'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `block in ms'
+  /usr/lib/ruby/2.3.0/benchmark.rb:308:in `realtime'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `ms'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block in render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:87:in `cleanup_view_runtime'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:25:in `cleanup_view_runtime'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:43:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:10:in `default_render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:5:in `send_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:198:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:10:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:20:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:117:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:505:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:92:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:19:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rescue.rb:29:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `block in instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications/instrumenter.rb:20:in `instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `instrument'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:30:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:137:in `process'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:30:in `process'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:196:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:237:in `block in action'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:74:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:43:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:43:in `block in serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `each'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:817:in `call'
+  rack (1.6.5) lib/rack/etag.rb:24:in `call'
+  rack (1.6.5) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.6.5) lib/rack/head.rb:13:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/params_parser.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:220:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+  activerecord (4.2.6) lib/active_record/migration.rb:377:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:88:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/reloader.rb:73:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:38:in `call_app'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `block in tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:26:in `tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `tagged'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/engine.rb:518:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_source.erb (7.7ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.8ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/missing_template.html.erb within rescues/layout (27.1ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.3ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (19.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.3ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (38.5ms)
+
+
+Started POST "/places" for 127.0.0.1 at 2017-03-19 16:05:22 +0200
+Processing by PlacesController#create as */*
+  Parameters: {"name"=>"Sofia", "continent"=>"Europe", "longitude"=>"44.1334", "latitude"=>"45.222"}
+  [1m[35mPlace Exists (0.4ms)[0m  SELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1  [["id", 0]]
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "places" ("name", "continent", "longitude", "latitude", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "Sofia"], ["continent", "Europe"], ["longitude", 44.1334], ["latitude", 45.222], ["created_at", "2017-03-19 14:05:22.070737"], ["updated_at", "2017-03-19 14:05:22.070737"]]
+  [1m[36m (15.1ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 31ms (Views: 1.0ms | ActiveRecord: 16.1ms)
+
+
+Started GET "/places?name=Hisaria" for 127.0.0.1 at 2017-03-19 16:12:09 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"Hisaria"}
+  [1m[35mPlace Exists (0.3ms)[0m  SELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1  [["id", 0]]
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.3ms)
+
+ActionView::MissingTemplate (Missing template places/show, application/show with {:locale=>[:en], :formats=>[:html, :text, :js, :css, :ics, :csv, :vcf, :png, :jpeg, :gif, :bmp, :tiff, :mpeg, :xml, :rss, :atom, :yaml, :multipart_form, :url_encoded_form, :json, :pdf, :zip, :web_console_v2], :variants=>[], :handlers=>[:erb, :builder, :raw, :ruby, :coffee, :jbuilder]}. Searched in:
+  * "/home/stealth/Desktop/Project_1/travel_project/app/views"
+):
+  /usr/lib/ruby/vendor_ruby/action_view/path_set.rb:46:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/lookup_context.rb:121:in `find'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/abstract_renderer.rb:18:in `find_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:40:in `determine_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/template_renderer.rb:8:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:46:in `render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/renderer/renderer.rb:27:in `render'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:100:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/streaming.rb:217:in `_render_template'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:83:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:32:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/renderers.rb:37:in `render_to_body'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/rendering.rb:25:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:16:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block (2 levels) in render'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `block in ms'
+  /usr/lib/ruby/2.3.0/benchmark.rb:308:in `realtime'
+  /usr/lib/ruby/vendor_ruby/active_support/core_ext/benchmark.rb:12:in `ms'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:44:in `block in render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:87:in `cleanup_view_runtime'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:25:in `cleanup_view_runtime'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:43:in `render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:10:in `default_render'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/implicit_render.rb:5:in `send_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:198:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rendering.rb:10:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:20:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:117:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:555:in `block (2 levels) in compile'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:505:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:92:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_process_action_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/callbacks.rb:19:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rescue.rb:29:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:32:in `block in process_action'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `block in instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications/instrumenter.rb:20:in `instrument'
+  /usr/lib/ruby/vendor_ruby/active_support/notifications.rb:164:in `instrument'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/instrumentation.rb:30:in `process_action'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/params_wrapper.rb:250:in `process_action'
+  activerecord (4.2.6) lib/active_record/railties/controller_runtime.rb:18:in `process_action'
+  /usr/lib/ruby/vendor_ruby/abstract_controller/base.rb:137:in `process'
+  /usr/lib/ruby/vendor_ruby/action_view/rendering.rb:30:in `process'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:196:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal/rack_delegation.rb:13:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_controller/metal.rb:237:in `block in action'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:74:in `dispatch'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:43:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:43:in `block in serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `each'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/journey/router.rb:30:in `serve'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/routing/route_set.rb:817:in `call'
+  rack (1.6.5) lib/rack/etag.rb:24:in `call'
+  rack (1.6.5) lib/rack/conditionalget.rb:25:in `call'
+  rack (1.6.5) lib/rack/head.rb:13:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/params_parser.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/flash.rb:260:in `call'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:225:in `context'
+  rack (1.6.5) lib/rack/session/abstract/id.rb:220:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/cookies.rb:560:in `call'
+  activerecord (4.2.6) lib/active_record/query_cache.rb:36:in `call'
+  activerecord (4.2.6) lib/active_record/connection_adapters/abstract/connection_pool.rb:653:in `call'
+  activerecord (4.2.6) lib/active_record/migration.rb:377:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:88:in `__run_callbacks__'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:778:in `_run_call_callbacks'
+  /usr/lib/ruby/vendor_ruby/active_support/callbacks.rb:81:in `run_callbacks'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/callbacks.rb:27:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/reloader.rb:73:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/remote_ip.rb:78:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  web-console (2.3.0) lib/web_console/middleware.rb:28:in `block in call'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `catch'
+  web-console (2.3.0) lib/web_console/middleware.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:38:in `call_app'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `block in call'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `block in tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:26:in `tagged'
+  /usr/lib/ruby/vendor_ruby/active_support/tagged_logging.rb:68:in `tagged'
+  /usr/lib/ruby/vendor_ruby/rails/rack/logger.rb:20:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.6.5) lib/rack/methodoverride.rb:22:in `call'
+  rack (1.6.5) lib/rack/runtime.rb:18:in `call'
+  /usr/lib/ruby/vendor_ruby/active_support/cache/strategy/local_cache_middleware.rb:28:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/static.rb:120:in `call'
+  rack (1.6.5) lib/rack/sendfile.rb:113:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/engine.rb:518:in `call'
+  /usr/lib/ruby/vendor_ruby/rails/application.rb:165:in `call'
+  rack (1.6.5) lib/rack/lock.rb:17:in `call'
+  rack (1.6.5) lib/rack/content_length.rb:15:in `call'
+  rack (1.6.5) lib/rack/handler/webrick.rb:88:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:140:in `service'
+  /usr/lib/ruby/2.3.0/webrick/httpserver.rb:96:in `run'
+  /usr/lib/ruby/2.3.0/webrick/server.rb:296:in `block in start_thread'
+
+
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_source.erb (8.7ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.8ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.7ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/missing_template.html.erb within rescues/layout (34.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.9ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (24.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (49.1ms)
+
+
+Started POST "/places?name=Hisaria" for 127.0.0.1 at 2017-03-19 16:15:47 +0200
+Processing by PlacesController#create as */*
+  Parameters: {"name"=>"Hisaria", "continent"=>"Europe", "longitude"=>"42.1334", "latitude"=>"41.222"}
+  [1m[36mPlace Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1[0m  [["id", 0]]
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "places" ("name", "continent", "longitude", "latitude", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["name", "Hisaria"], ["continent", "Europe"], ["longitude", 42.1334], ["latitude", 41.222], ["created_at", "2017-03-19 14:15:47.181747"], ["updated_at", "2017-03-19 14:15:47.181747"]]
+  [1m[35m (5.0ms)[0m  COMMIT
+Completed 200 OK in 10ms (Views: 0.5ms | ActiveRecord: 5.7ms)
+
+
+Started GET "/places?name=Hisaria" for 127.0.0.1 at 2017-03-19 16:15:56 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"Hisaria"}
+  [1m[36mPlace Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1[0m  [["id", 0]]
+  Rendered places/show.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 2182ms (Views: 2180.1ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/places?name=Hisaria" for 127.0.0.1 at 2017-03-19 16:17:51 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"Hisaria"}
+  [1m[35mPlace Load (0.5ms)[0m  SELECT "places".* FROM "places" WHERE "places"."name" = $1  [["name", "Hisaria"]]
+Completed 200 OK in 34ms (Views: 26.3ms | ActiveRecord: 3.7ms)
+
+
+Started GET "/places?name=New%20York" for 127.0.0.1 at 2017-03-19 16:18:13 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"New York"}
+  [1m[36mPlace Load (0.5ms)[0m  [1mSELECT "places".* FROM "places" WHERE "places"."name" = $1[0m  [["name", "New York"]]
+Completed 200 OK in 5ms (Views: 3.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/places?name=Sofia" for 127.0.0.1 at 2017-03-19 16:20:30 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"Sofia"}
+  [1m[35mPlace Load (0.4ms)[0m  SELECT "places".* FROM "places" WHERE "places"."name" = $1  [["name", "Sofia"]]
+Completed 200 OK in 14ms (Views: 6.6ms | ActiveRecord: 3.5ms)
+
+
+Started GET "/places?name=Sofia" for 127.0.0.1 at 2017-03-19 16:21:02 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"Sofia"}
+  [1m[36mPlace Load (6.8ms)[0m  [1mSELECT "places".* FROM "places" WHERE (Sofia)[0m
+Completed 500 Internal Server Error in 11ms (ActiveRecord: 6.8ms)
+
+ActiveRecord::StatementInvalid (PG::UndefinedColumn: ERROR:  column "sofia" does not exist
+LINE 1: SELECT "places".* FROM "places" WHERE (Sofia)
+                                               ^
+: SELECT "places".* FROM "places" WHERE (Sofia)):
+  app/controllers/places_controller.rb:18:in `show'
+
+
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_source.erb (9.6ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_trace.html.erb (4.1ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (30.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.8ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (21.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.4ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (0.9ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (43.8ms)
+
+
+Started GET "/places?name=Sofia" for 127.0.0.1 at 2017-03-19 16:21:33 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"Sofia"}
+  [1m[35mPlace Load (0.3ms)[0m  SELECT "places".* FROM "places" WHERE "places"."name" = $1  [["name", "Sofia"]]
+Completed 200 OK in 15ms (Views: 9.3ms | ActiveRecord: 2.8ms)
+
+
+Started POST "/places?name=Sofia" for 127.0.0.1 at 2017-03-21 12:02:12 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (37.9ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by PlacesController#create as */*
+  Parameters: {"name"=>"Sofia", "continent"=>"Asia", "longitude"=>"42.1334", "latitude"=>"41.222"}
+  [1m[35mPlace Exists (40.2ms)[0m  SELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1  [["id", 0]]
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (16.2ms)[0m  INSERT INTO "places" ("name", "continent", "longitude", "latitude", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"  [["name", "Sofia"], ["continent", "Asia"], ["longitude", 42.1334], ["latitude", 41.222], ["created_at", "2017-03-21 10:02:13.710526"], ["updated_at", "2017-03-21 10:02:13.710526"]]
+  [1m[36m (17.2ms)[0m  [1mCOMMIT[0m
+Completed 200 OK in 342ms (Views: 0.7ms | ActiveRecord: 193.9ms)
+
+
+Started GET "/places?name=Sofia&continent=Asia" for 127.0.0.1 at 2017-03-21 12:02:46 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"Sofia", "continent"=>"Asia"}
+  [1m[35mPlace Load (0.5ms)[0m  SELECT "places".* FROM "places" WHERE "places"."name" = $1 AND "places"."continent" = $2  [["name", "Sofia"], ["continent", "Asia"]]
+Completed 200 OK in 5ms (Views: 3.9ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/places?name=Sofia&continent=Europe" for 127.0.0.1 at 2017-03-21 12:02:52 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"Sofia", "continent"=>"Europe"}
+  [1m[36mPlace Load (0.4ms)[0m  [1mSELECT "places".* FROM "places" WHERE "places"."name" = $1 AND "places"."continent" = $2[0m  [["name", "Sofia"], ["continent", "Europe"]]
+Completed 200 OK in 3ms (Views: 1.5ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/places?name=Sofia&continent=Asia" for 127.0.0.1 at 2017-03-21 12:02:59 +0200
+Processing by PlacesController#show as */*
+  Parameters: {"name"=>"Sofia", "continent"=>"Asia"}
+  [1m[35mPlace Load (0.5ms)[0m  SELECT "places".* FROM "places" WHERE "places"."name" = $1 AND "places"."continent" = $2  [["name", "Sofia"], ["continent", "Asia"]]
+Completed 200 OK in 4ms (Views: 2.2ms | ActiveRecord: 0.5ms)
