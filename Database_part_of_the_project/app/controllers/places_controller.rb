@@ -14,7 +14,9 @@ class PlacesController < ApplicationController
 	end
 
 	def show
-			@place=Place.where(name: params[:name],continent: params[:continent])	
-			render json: @place
+			@place=Place.all
+			prng = Random.new
+			num = prng.rand(@place.count)
+			render json: @place[num]
 	end
 end
