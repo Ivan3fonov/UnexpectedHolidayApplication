@@ -12,6 +12,7 @@ public class NewDestination extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_destination);
+
         Button button = (Button)findViewById(R.id.Random);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -20,8 +21,9 @@ public class NewDestination extends AppCompatActivity {
                 startActivity(start);
             }
         });
+
         Button europe = (Button)findViewById(R.id.Europe);
-        button.setOnClickListener(new View.OnClickListener() {
+        europe.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -30,8 +32,9 @@ public class NewDestination extends AppCompatActivity {
                 startActivity(start);
             }
         });
+
         Button asia = (Button)findViewById(R.id.Asia);
-        button.setOnClickListener(new View.OnClickListener() {
+        asia.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
