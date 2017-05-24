@@ -1391,3 +1391,59 @@ Started GET "/places" for 127.0.0.1 at 2017-05-15 17:56:56 +0300
 Processing by PlacesController#show as */*
   [1m[35mPlace Load (1.0ms)[0m  SELECT "places".* FROM "places"
 Completed 200 OK in 30ms (Views: 12.5ms | ActiveRecord: 5.2ms)
+  [1m[36m (72.3ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (51.2ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreatePlaces (20170319125740)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (75.5ms)[0m  [1mCREATE TABLE "places" ("id" serial primary key, "name" character varying, "continent" character varying, "country" character varying, "web_info" character varying, "longitude" float, "latitude" float, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20170319125740"]]
+  [1m[36m (21.1ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.5ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (4.8ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'places'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+
+
+Started POST "/places" for 127.0.0.1 at 2017-05-24 16:15:23 +0300
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by PlacesController#create as */*
+  Parameters: {"name"=>"Paris", "continent"=>"Europe", "longitude"=>"2.352222", "latitude"=>"48.856614", "country"=>"France", "web_info"=>"France"}
+  [1m[35mPlace Exists (0.8ms)[0m  SELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1  [["id", 0]]
+Completed 500 Internal Server Error in 123ms (ActiveRecord: 6.2ms)
+
+ActiveModel::ForbiddenAttributesError (ActiveModel::ForbiddenAttributesError):
+  app/controllers/places_controller.rb:6:in `create'
+
+
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_source.erb (12.4ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.8ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.9ms)
+  Rendered /usr/lib/ruby/vendor_ruby/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (56.9ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_markup.html.erb (0.6ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_inner_console_markup.html.erb within layouts/inlined_string (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/_prompt_box_markup.html.erb within layouts/inlined_string (0.7ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/style.css.erb within layouts/inlined_string (0.8ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/console.js.erb within layouts/javascript (83.3ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/main.js.erb within layouts/javascript (0.5ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/error_page.js.erb within layouts/javascript (1.2ms)
+  Rendered /var/lib/gems/2.3.0/gems/web-console-2.3.0/lib/web_console/templates/index.html.erb (118.1ms)
+
+
+Started POST "/places" for 127.0.0.1 at 2017-05-24 16:18:48 +0300
+Processing by PlacesController#create as */*
+  Parameters: {"name"=>"Paris", "continent"=>"Europe", "longitude"=>"2.352222", "latitude"=>"48.856614", "country"=>"France", "web_info"=>"France"}
+  [1m[36mPlace Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "places" WHERE "places"."id" = $1 LIMIT 1[0m  [["id", 0]]
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36mSQL (8.3ms)[0m  [1mINSERT INTO "places" ("name", "continent", "longitude", "latitude", "country", "web_info", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id"[0m  [["name", "Paris"], ["continent", "Europe"], ["longitude", 2.352222], ["latitude", 48.856614], ["country", "France"], ["web_info", "France"], ["created_at", "2017-05-24 13:18:48.745227"], ["updated_at", "2017-05-24 13:18:48.745227"]]
+  [1m[35m (51.1ms)[0m  COMMIT
+Completed 200 OK in 92ms (Views: 1.0ms | ActiveRecord: 63.8ms)

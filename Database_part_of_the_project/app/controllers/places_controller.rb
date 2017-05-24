@@ -8,7 +8,9 @@ class PlacesController < ApplicationController
 			@place.continent = params[:continent]
 			@place.longitude=params[:longitude]
 			@place.latitude=params[:latitude]
-			@place.save
+			@place.country =params[:country]
+			@place.web_info = params[:web_info]
+@place.save
 			render json: @place
 		end
 	end

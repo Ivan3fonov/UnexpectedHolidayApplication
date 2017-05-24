@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20170319125740) do
   create_table "places", force: :cascade do |t|
     t.string   "name"
     t.string   "continent"
+    t.string   "country"
+    t.string   "web_info"
     t.float    "longitude"
     t.float    "latitude"
     t.datetime "created_at", null: false
