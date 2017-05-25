@@ -9,6 +9,7 @@
 
     <TextView
         android:id="@+id/wiki"
+        android:autoLink="all"
         android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,6 +28,7 @@
         android:id="@+id/weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoLink="all"
         android:clickable="true"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -43,6 +45,7 @@
         android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoLink="all"
         android:clickable="true"
         android:text="TextView"
         android:layout_marginRight="8dp"
