@@ -1,6 +1,7 @@
 package bicepsa.vanko.traveling_project;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import com.google.android.gms.location.LocationListener;
 
@@ -13,6 +14,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -39,7 +42,8 @@ import org.json.JSONObject;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback ,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener {
+        LocationListener,
+        GoogleMap.OnMarkerClickListener {
 
 
     private String url = "https://travel-project69.herokuapp.com/places";
@@ -47,7 +51,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
+    Marker myMarker;
     LocationRequest mLocationRequest;
+    String lat;
+    String longit;
+
+    String loc_name;
+    String country;
+    String web_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +73,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(check != null) {
             url += "?continent="+check.getString("params");
         }
+
+        Button button = (Button)findViewById(R.id.new_dest);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent start = new Intent(getApplicationContext(),NewDestination.class);
+                startActivity(start);
+            }
+        });
     }
 
 
@@ -99,12 +119,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    String lat = response.getString("latitude");
-                    String longit = response.getString("longitude");
-                    addmarker(lat,longit);
+                    lat = response.getString("latitude");
+                    longit = response.getString("longitude");
+                    loc_name = response.getString("name");
+                    country = response.getString("country");
+                    web_info = response.getString("web_info");
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                addmarker(lat,longit);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -127,9 +151,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void addmarker(String lat, String longit) {
+
         LatLng location = new LatLng(Float.parseFloat(lat),Float.parseFloat(longit));
-        MarkerOptions options = new MarkerOptions().position(location);
-        mMap.addMarker(options);
+
+        MarkerOptions options = new MarkerOptions().position(location).title(loc_name);
+        myMarker = mMap.addMarker(options);
+
+        mMap.setOnMarkerClickListener(this);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
     }
 
@@ -176,10 +204,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (LocationListener) this);
-        }
     }
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -245,5 +269,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // other 'case' lines to check for other permissions this app might request.
             //You can add here other case statements according to your requirement.
         }
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        Intent start = new Intent(getApplicationContext(),Information.class);
+        start.putExtra("name",loc_name);
+        start.putExtra("country",country);
+        start.putExtra("web_info",web_info);
+        startActivity(start);
+
+        return true;
     }
 }
