@@ -2,6 +2,7 @@ package bicepsa.vanko.traveling_project;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import com.google.android.gms.location.LocationListener;
 
@@ -46,7 +47,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         GoogleMap.OnMarkerClickListener {
 
 
-    private String url = "https://travel-project69.herokuapp.com/places";
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
@@ -69,10 +69,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Bundle check = getIntent().getExtras();
-        if(check != null) {
-            url += "?continent="+check.getString("params");
-        }
 
         Button button = (Button)findViewById(R.id.new_dest);
         button.setOnClickListener(new View.OnClickListener() {
@@ -113,30 +109,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
 
-        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        SharedPreferences data = getSharedPreferences("DestinationData",MODE_PRIVATE);
+        if(data.contains("lat") && data.contains("longit") && data.contains("name")
+                && data.contains("country") && data.contains("web_info")){
+            lat = data.getString("lat","0");
+            longit = data.getString("longit","0");
+            loc_name = data.getString("name","N/A");
+            country = data.getString("country","N/A");
+            web_info = data.getString("web_info","N/A");
+            addmarker(lat,longit);
+        }else{
+            Toast.makeText(this, "Pick new destination", Toast.LENGTH_LONG).show();
+        }
 
-        JsonObjectRequest request = new JsonObjectRequest( url,null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    lat = response.getString("latitude");
-                    longit = response.getString("longitude");
-                    loc_name = response.getString("name");
-                    country = response.getString("country");
-                    web_info = response.getString("web_info");
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                addmarker(lat,longit);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("Error",error.getMessage());
-            }
-        });
-        queue.add(request);
     }
 
 
