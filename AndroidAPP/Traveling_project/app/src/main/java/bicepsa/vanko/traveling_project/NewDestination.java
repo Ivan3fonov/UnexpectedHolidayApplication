@@ -27,12 +27,11 @@ public class NewDestination extends AppCompatActivity {
         setContentView(R.layout.activity_new_destination);
 
         Button button = (Button)findViewById(R.id.Random);
-        sendRequest(null);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent start = new Intent(getApplicationContext(),MapsActivity.class);
-                startActivity(start);
+                sendRequest(null);
             }
         });
 
@@ -42,8 +41,6 @@ public class NewDestination extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendRequest("Europe");
-                Intent start = new Intent(getApplicationContext(),MapsActivity.class);
-                startActivity(start);
             }
         });
 
@@ -53,7 +50,15 @@ public class NewDestination extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendRequest("Asia");
-                Intent start = new Intent(getApplicationContext(),MapsActivity.class);
+            }
+        });
+
+        Button route = (Button)findViewById(R.id.route);
+        route.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent start = new Intent(getApplicationContext(),Route.class);
                 startActivity(start);
             }
         });
@@ -71,14 +76,14 @@ public class NewDestination extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    SharedPreferences data = getSharedPreferences("DestinationData",MODE_PRIVATE);
-                    SharedPreferences.Editor editor = data.edit();
-                    editor.putString("lat",response.getString("latitude"));
-                    editor.putString("longit",response.getString("longitude"));
-                    editor.putString("name",response.getString("name"));
-                    editor.putString("country",response.getString("country"));
-                    editor.putString("web_info",response.getString("web_info"));
-                    editor.apply();
+                    Intent start = new Intent(getApplicationContext(),MapsActivity.class);
+                    startActivity(start);
+                    start.putExtra("lat",response.getString("latitude"));
+                    start.putExtra("longit",response.getString("longitude"));
+                    start.putExtra("name",response.getString("name"));
+                    start.putExtra("country",response.getString("country"));
+                    start.putExtra("web_info",response.getString("web_info"));
+                    startActivity(start);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
